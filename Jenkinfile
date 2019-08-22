@@ -1,0 +1,16 @@
+pipeline {
+    agent any
+    stages{
+        stage(scm){
+            steps{ git 'https://github.com/srinathsri14/my-app.git'}
+        }
+        stage(build){
+            steps{bat label: '', script: 'mvn clean'
+                bat label: '', script: 'mvn install'
+            }
+        }
+        stage(deploy){
+            steps{ bat label: '', script: 'xcopy /y "C:\\Program Files (x86)\\Jenkins\\workspace\\hippo\\target\\my-app.war" "C:\\Program Files\\Apache Software Foundation\\Tomcat 8.5\\webapps"'}
+        }
+    }
+}
